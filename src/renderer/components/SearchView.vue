@@ -24,6 +24,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import NaverKorea from '../services/naver_korea'
 
 export default {
   name: 'search-view',
@@ -36,8 +37,8 @@ export default {
   },
   methods: {
     async clickItem (itemCode) {
-      console.log(itemCode)
-      // TODO
+      const nk = new NaverKorea(itemCode)
+      await nk.scrap()
     },
     async findItemName () {
       if (this.itemName) {
