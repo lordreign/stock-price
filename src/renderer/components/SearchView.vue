@@ -59,6 +59,8 @@ export default {
           'executeJs',
           this.jsCodes.year
         )
+        // TODO 정보 가져오기... 그후 값 셋팅 하기
+
         // ipcRenderer.send('executeJs', 'document.documentElement.innerHTML')
         // document.querySelector("#coinfo_cp").contentDocument
       })
