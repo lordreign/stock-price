@@ -1,6 +1,6 @@
 'use strict'
 
-import { app, BrowserWindow } from 'electron'
+import { app, BrowserWindow, ipcMain } from 'electron'
 import '../renderer/store'
 
 /**
@@ -11,7 +11,9 @@ if (process.env.NODE_ENV !== 'development') {
   global.__static = require('path').join(__dirname, '/static').replace(/\\/g, '\\\\')
 }
 
-let mainWindow
+let mainWindow = null
+let childWindow = null
+
 const winURL = process.env.NODE_ENV === 'development'
   ? `http://localhost:9080`
   : `file://${__dirname}/index.html`
@@ -31,6 +33,24 @@ function createWindow () {
 
   mainWindow.on('closed', () => {
     mainWindow = null
+    app.quit()
+  })
+
+  childWindow = new BrowserWindow({
+    parent: mainWindow,
+    center: true,
+    minWidth: 800,
+    minHeight: 600,
+    show: true,
+    webPreferences: {
+      nodeIntegration: false, // https://electronjs.org/docs/tutorial/security#2-d%C3%A9sactiver-lint%C3%A9gration-de-nodejs-dans-tous-les-renderers-affichant-des-contenus-distants
+      webSecurity: false
+    }
+  })
+
+  childWindow.webContents.on('dom-ready', function () {
+    console.log('childWindow DOM-READY')
+    mainWindow.send('childDomReady')
   })
 }
 
@@ -67,3 +87,16 @@ app.on('ready', () => {
   if (process.env.NODE_ENV === 'production') autoUpdater.checkForUpdates()
 })
  */
+
+ipcMain.on('loadurl', (event, url) => {
+  childWindow.loadURL(url, { userAgent: 'My Super Browser v2.0 Youpi Tralala !' })
+})
+
+ipcMain.on('executeJs', (event, code) => {
+  childWindow.webContents.executeJavaScript(code).then((result) => {
+    mainWindow.send('resultExecutedJs', {
+      code,
+      result
+    })
+  })
+})

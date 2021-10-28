@@ -18,27 +18,50 @@
           <a @click="clickItem(item[0][0])">{{item[0][0]}}({{item[2][0]}}) > {{item[1][0]}}</a>
         </li>
       </ul>
+      <router-link to="/webview" class="nav-link">webview</router-link>
     </section>
   </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
-import NaverKorea from '../services/naver_korea'
+import { ipcRenderer } from 'electron'
+import util from '../common/util'
+// import NaverKorea from '../services/naver_korea'
 
 export default {
   name: 'search-view',
   data: () => ({
     itemName: '',
-    searchItemList: []
+    searchItemList: [],
+    jsCodes: {
+      year: 'document.querySelector("#coinfo_cp").contentDocument.querySelector("#cns_Tab21").click()'
+    }
   }),
   computed: {
     ...mapGetters(['getItems'])
   },
+  mounted () {
+    ipcRenderer.on('resultExecutedJs', (event, html) => {
+      console.log('resultExecutedJs given by child window')
+      console.log(html)
+    })
+  },
   methods: {
     async clickItem (itemCode) {
-      const nk = new NaverKorea(itemCode)
-      await nk.scrap()
+      // this.$router.push({path: '/naver-webview', query: { itemCode }})
+      const url = `https://finance.naver.com/item/coinfo.naver?code=${itemCode}&target=finsum_more`
+      ipcRenderer.send('loadurl', url)
+      ipcRenderer.on('childDomReady', () => {
+        util.sleep(2000)
+        // 재무재표 연간 버튼 클릭
+        ipcRenderer.send(
+          'executeJs',
+          this.jsCodes.year
+        )
+        // ipcRenderer.send('executeJs', 'document.documentElement.innerHTML')
+        // document.querySelector("#coinfo_cp").contentDocument
+      })
     },
     async findItemName () {
       if (this.itemName) {
@@ -46,7 +69,5 @@ export default {
       }
     }
   }
-  // https://navercomp.wisereport.co.kr/v2/company/ajax/cF1001.aspx?cmp_cd=005930&fin_typ=0&freq_typ=A&encparam=WHYrSUF0Z0FSak1vQWVmUVcxUGdCQT09&id=VGVTbkwxZ2
-  // https://navercomp.wisereport.co.kr/v2/company/ajax/cF1001.aspx?cmp_cd=028260&fin_typ=0&freq_typ=Y&encparam=eHo0SmV6OVE0MnZlak12eFcvM1NiUT09&id=ZTRzQlVCd0
 }
 </script>

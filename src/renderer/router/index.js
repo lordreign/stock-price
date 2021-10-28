@@ -7,8 +7,13 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'landing-page',
-      component: require('@/components/SearchView').default
+      name: 'search-view',
+      component: () => import('../components/SearchView.vue')
+    },
+    {
+      path: '/naver-webview',
+      name: 'naver-webview',
+      component: () => import('../components/NaverWebview.vue')
     },
     {
       path: '*',
