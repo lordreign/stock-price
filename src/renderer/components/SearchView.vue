@@ -60,6 +60,8 @@ export default {
           this.jsCodes.year
         )
         // TODO 정보 가져오기... 그후 값 셋팅 하기
+        // loading > https://github.com/ankurk91/vue-loading-overlay
+        // 셋팅 후 결과 페이지로....
 
         // ipcRenderer.send('executeJs', 'document.documentElement.innerHTML')
         // document.querySelector("#coinfo_cp").contentDocument
