@@ -10,6 +10,9 @@ const actions = {
     const items = result.data.items[0]
     commit('SET_ITEM_LIST', items)
     return items
+  },
+  resetItemList ({commit}) {
+    commit('SET_ITEM_LIST', [])
   }
 }
 
