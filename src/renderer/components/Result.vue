@@ -5,7 +5,7 @@
       <tbody>
       <tr v-for="(values, key) in getFinanceData" :key="key">
         <th>{{ key }}</th>
-        <td v-for="(value, i) in values" :key="`${key}_${i}`">{{value}}</td>
+        <td v-for="(value, i) in values" :key="`${key}_${i}`">{{value | makeComma}}</td>
         <template v-if="values.length < maxValueLength">
           <td v-for="index in (maxValueLength - values.length)"></td>
         </template>
@@ -19,47 +19,47 @@
       <tr>
         <th>적정주가 1</th>
         <td>EPS * PER</td>
-        <td>{{epsPer}}</td>
+        <td>{{epsPer | makeInt | makeComma}}</td>
       </tr>
       <tr>
         <th>적정주가 2</th>
         <td>현명한 투자자</td>
-        <td>{{smartInvestor}}</td>
+        <td>{{smartInvestor | makeInt | makeComma}}</td>
       </tr>
       <tr>
         <th rowspan="3">적정주가 3</th>
         <td>BPS</td>
-        <td>{{ bps }}</td>
+        <td>{{ bps  | makeInt | makeComma}}</td>
       </tr>
       <tr>
         <td>EPS * 10</td>
-        <td>{{ expectedEps * 10}}</td>
+        <td>{{ expectedEps * 10 | makeInt | makeComma}}</td>
       </tr>
       <tr>
         <td>EPS * ROE</td>
-        <td>{{ epsRoe }}</td>
+        <td>{{ epsRoe | makeInt | makeComma}}</td>
       </tr>
       <tr>
         <th rowspan="2">적정주가 4</th>
         <td>지배주주순이익 * PER</td>
-        <td>{{ properNpdtPer }}</td>
+        <td>{{ properNpdtPer | makeInt | makeComma}}</td>
       </tr>
       <tr>
         <td>당기순이익 * PER</td>
-        <td>{{ npdtPer }}</td>
+        <td>{{ npdtPer | makeInt | makeComma}}</td>
       </tr>
       <tr>
         <th rowspan="3">적정주가 5</th>
         <td>S-rim</td>
-        <td>{{ srim }}</td>
+        <td>{{ srim | makeInt | makeComma}}</td>
       </tr>
       <tr>
         <td>매수가</td>
-        <td>{{ buyPrice }}</td>
+        <td>{{ buyPrice | makeInt | makeComma}}</td>
       </tr>
       <tr>
         <td>1차 매도가</td>
-        <td>{{ firstSellPrice }}</td>
+        <td>{{ firstSellPrice | makeInt | makeComma}}</td>
       </tr>
       </tbody>
     </table>

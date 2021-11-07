@@ -16,11 +16,6 @@ export default new Router({
       component: () => import('../components/Result.vue')
     },
     {
-      path: '/naver-webview',
-      name: 'naver-webview',
-      component: () => import('../components/NaverWebview.vue')
-    },
-    {
       path: '*',
       redirect: '/'
     }
