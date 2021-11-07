@@ -4,6 +4,7 @@ import axios from 'axios'
 import App from './App'
 import router from './router'
 import store from './store'
+import Loading from 'vue-loading-overlay'
 
 if (!process.env.IS_WEB) Vue.use(require('vue-electron'))
 Vue.http = Vue.prototype.$http = axios
@@ -16,6 +17,8 @@ Vue.filter('makeInt', val => {
   }
   return 0
 })
+
+Vue.use(Loading)
 
 /* eslint-disable no-new */
 new Vue({

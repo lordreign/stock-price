@@ -289,6 +289,9 @@ export default {
     },
     // 재무재표 연간 버튼 클릭
     async clickItem (itemCode, itemName) {
+      const loader = this.$loading.show({
+        loader: 'spinner'
+      })
       this.isChildDomReady = false
       this.isIpcLoading = false
       ipcRenderer.removeListener('childDomReady', this.setTrueIsChildDomReady)
@@ -309,6 +312,7 @@ export default {
       // 재무상태표 가져오기
       await this.getFinanceStatusData()
       await this.$store.dispatch('setFinanceData', this.financeData)
+      loader.hide()
       this.$router.push({path: '/result', query: { itemCode, itemName }})
     },
     async findItemName () {

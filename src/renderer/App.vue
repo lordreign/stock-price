@@ -12,4 +12,5 @@
 
 <style>
   @import '~bulma/css/bulma.css';
+  @import '~vue-loading-overlay/dist/vue-loading.css';
 </style>

@@ -9410,6 +9410,11 @@ vue-loader@^15.2.4:
     vue-hot-reload-api "^2.3.0"
     vue-style-loader "^4.1.0"
 
+vue-loading-overlay@3.0:
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/vue-loading-overlay/-/vue-loading-overlay-3.0.1.tgz#0fa8d247af5a692d2fde0e477f89214d4245e37b"
+  integrity sha512-1y7Yghbb8SFw0DzMVz6tVKUz7wvsmWw+78mKQ148ZWDfGroX86wCUmsurx4BxNggziVfWWGvS0QexpwkmdSMgw==
+
 vue-router@^3.0.1:
   version "3.5.2"
   resolved "https://registry.yarnpkg.com/vue-router/-/vue-router-3.5.2.tgz#5f55e3f251970e36c3e8d88a7cd2d67a350ade5c"
